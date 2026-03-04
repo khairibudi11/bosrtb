@@ -282,8 +282,8 @@
     </div>
 
 <script>
-  // GANTI URL INI DENGAN URL DEPLOYMENT ANDA DARI LANGKAH 1
-  const API_URL = "https://script.google.com/macros/s/AKfycbz6LCNUKo_J26dfqGRVPUd9LpPlM27S0LBF5ztctlMt2zNDiiSsM0dLlQhiioucNuaqBQ/exec";
+  // PASTE URL WEB APP ANDA DI SINI
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6LCNUKo_J26dfqGRVPUd9LpPlM27S0LBF5ztctlMt2zNDiiSsM0dLlQhiioucNuaqBQ/exec";
 
   function formatRupiah(el) {
     let val = el.value.replace(/\D/g, '');
@@ -291,16 +291,20 @@
   }
 
   function bukaForm(jenis) {
+    // UI Transitions
     document.getElementById('view-home').classList.add('hidden');
     document.getElementById('view-form').classList.remove('hidden');
+    
     document.getElementById('input-jenis').value = jenis;
     document.getElementById('label-jenis').innerText = jenis;
-    document.getElementById('display-saldo').innerText = "Loading...";
-    
-    // Ambil Saldo via Fetch
-    fetch(`${API_URL}?sheet=${jenis}`)
+    document.getElementById('display-saldo').innerText = "Memuat...";
+
+    // Ambil Saldo dari Google Sheets via Fetch
+    fetch(`${SCRIPT_URL}?sheet=${encodeURIComponent(jenis)}`)
       .then(res => res.json())
-      .then(data => { document.getElementById('display-saldo').innerText = data.saldo; });
+      .then(data => {
+        document.getElementById('display-saldo').innerText = data.saldo;
+      });
   }
 
   function keHome() {
@@ -318,7 +322,7 @@
     const btn = document.querySelector('.btn-submit');
     const form = document.getElementById('transaksiForm');
     
-    const data = {
+    const payload = {
       jenisBuku: document.getElementById('input-jenis').value,
       tipe: document.getElementById('input-tipe').value,
       deskripsi: form.deskripsi.value,
@@ -326,27 +330,30 @@
       keterangan: form.keterangan.value
     };
 
-    if(!data.nominal || !data.deskripsi) return Swal.fire("Oops", "Data tidak lengkap", "warning");
+    if(!payload.nominal || !payload.deskripsi) {
+      return Swal.fire("Peringatan", "Deskripsi dan Nominal wajib diisi!", "warning");
+    }
 
-    btn.innerText = "Mengirim...";
+    btn.innerText = "Sedang Menyimpan...";
     btn.disabled = true;
 
     try {
-      // Mengirim data ke Google Apps Script
-      const response = await fetch(API_URL, {
+      const response = await fetch(SCRIPT_URL, {
         method: 'POST',
-        body: JSON.stringify(data)
+        body: JSON.stringify(payload)
       });
       const res = await response.json();
 
-      if(res.result === "Sukses") {
-        Swal.fire("Tersimpan!", "", "success").then(() => {
+      if (res.result.includes("Berhasil")) {
+        Swal.fire("Berhasil!", res.result, "success").then(() => {
           form.reset();
-          bukaForm(data.jenisBuku); // Refresh saldo
+          bukaForm(payload.jenisBuku); // Refresh saldo
         });
+      } else {
+        throw new Error(res.result);
       }
     } catch (err) {
-      Swal.fire("Error", "Gagal koneksi ke server", "error");
+      Swal.fire("Gagal", "Terjadi kesalahan: " + err.message, "error");
     } finally {
       btn.innerText = "Simpan Transaksi";
       btn.disabled = false;
