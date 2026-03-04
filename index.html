@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+      :root {
+        --primary-grad: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Ungu-Biru */
+        --success-grad: linear-gradient(135deg, #0ba360 0%, #3cba92 100%); /* Hijau Segar */
+        --danger-grad: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%); /* Merah Oranye */
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.4);
+        --text-dark: #2d3748;
+        --text-light: #718096;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Background Animasi */
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: var(--text-dark);
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .app-container {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* --- GLASS CARD STYLE --- */
+      .glass-card {
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 30px 25px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .header h2 {
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0 0 5px 0;
+        background: var(--primary-grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .header p { margin: 0; color: var(--text-light); font-size: 14px; }
+
+      /* --- BUTTONS --- */
+      .menu-btn {
+        width: 100%;
+        padding: 18px 20px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 18px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-align: left;
+      }
+
+      .menu-btn:active { transform: scale(0.97); }
+      .menu-btn i { font-size: 20px; margin-right: 10px; background: rgba(255,255,255,0.2); padding: 8px; border-radius: 10px; }
+      
+      .btn-reguler { background: var(--primary-grad); }
+      .btn-kas { background: var(--success-grad); }
+
+      /* --- FORM ELEMENTS --- */
+      .hidden { display: none; }
+      
+      .saldo-container {
+        text-align: center;
+        margin-bottom: 25px;
+        position: relative;
+      }
+      .saldo-label { font-size: 12px; letter-spacing: 1px; color: var(--text-light); text-transform: uppercase; font-weight: 600; }
+      .saldo-value { font-size: 32px; font-weight: 700; color: #2d3748; margin-top: 5px; }
+
+      /* Modern Toggle */
+      .toggle-wrapper {
+        background: #e2e8f0;
+        padding: 5px;
+        border-radius: 16px;
+        display: flex;
+        margin-bottom: 25px;
+        position: relative;
+      }
+      
+      .toggle-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        color: var(--text-light);
+        cursor: pointer;
+        border-radius: 12px;
+        transition: 0.3s all;
+        z-index: 2;
+      }
+
+      .toggle-btn.active {
+        background: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        color: #2d3748;
+      }
+      
+      .toggle-btn.active.out-mode { color: #e53e3e; } /* Merah teks saat keluar */
+      .toggle-btn.active.in-mode { color: #38a169; } /* Hijau teks saat masuk */
+
+      /* Floating Inputs */
+      .input-group { position: relative; margin-bottom: 20px; }
+      
+      .form-input {
+        width: 100%;
+        padding: 16px 16px 16px 50px; /* Space for icon */
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+        outline: none;
+        background: rgba(255,255,255,0.6);
+        transition: 0.3s;
+      }
+      
+      .form-input:focus {
+        border-color: #764ba2;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.1);
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #a0aec0;
+        font-size: 18px;
+        transition: 0.3s;
+      }
+      
+      .form-input:focus + .input-icon { color: #764ba2; }
+
+      /* Action Buttons */
+      .btn-submit {
+        width: 100%;
+        padding: 18px;
+        background: #2d3748;
+        color: white;
+        border: none;
+        border-radius: 16px;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 10px;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(45, 55, 72, 0.2);
+        transition: 0.2s;
+      }
+      
+      .btn-submit:active { transform: scale(0.97); }
+      
+      .btn-back {
+        background: transparent;
+        color: var(--text-light);
+        box-shadow: none;
+        margin-top: 0;
+      }
+
+      /* Customizing SweetAlert */
+      div:where(.swal2-container) div:where(.swal2-popup) {
+        border-radius: 24px !important;
+        padding: 30px !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(10px);
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="app-container">
+      
+      <div id="view-home" class="glass-card">
+        <div class="header">
+          <h2>BOS Sekolah</h2>
+          <p>By SDN Rantau Bujur</p>
+        </div>
+        <br>
+        
+        <button class="menu-btn btn-reguler" onclick="bukaForm('BOS Reguler')">
+          <div style="display:flex; align-items:center">
+            <i class="fas fa-book"></i> <span>BOS Reguler</span>
+          </div>
+          <i class="fas fa-chevron-right" style="background:none; font-size:14px;"></i>
+        </button>
+        
+        <button class="menu-btn btn-kas" onclick="bukaForm('BOS Kas')">
+          <div style="display:flex; align-items:center">
+            <i class="fas fa-wallet"></i> <span>BOS Kas</span>
+          </div>
+          <i class="fas fa-chevron-right" style="background:none; font-size:14px;"></i>
+        </button>
+      </div>
+
+      <div id="view-form" class="hidden">
+        <div class="glass-card">
+          
+          <div class="saldo-container">
+            <div class="saldo-label" id="label-jenis">BOS REGULER</div>
+            <div class="saldo-value" id="display-saldo">Rp 0</div>
+          </div>
+
+          <form id="transaksiForm">
+            <input type="hidden" id="input-jenis" name="jenisBuku">
+            <input type="hidden" id="input-tipe" name="tipe" value="Pemasukan">
+
+            <div class="toggle-wrapper">
+              <button type="button" class="toggle-btn active in-mode" onclick="setTipe('Pemasukan', this)">
+                <i class="fas fa-arrow-down"></i> Masuk
+              </button>
+              <button type="button" class="toggle-btn" onclick="setTipe('Pengeluaran', this)">
+                <i class="fas fa-arrow-up"></i> Keluar
+              </button>
+            </div>
+
+            <div class="input-group">
+              <input type="text" name="deskripsi" class="form-input" placeholder="Deskripsi Transaksi" required>
+              <i class="fas fa-pen input-icon"></i>
+            </div>
+
+            <div class="input-group">
+              <input type="text" name="nominal" id="field-nominal" class="form-input" placeholder="Nominal (Rp)" required onkeyup="formatRupiah(this)">
+              <i class="fas fa-tag input-icon"></i>
+            </div>
+
+            <div class="input-group">
+              <input type="text" name="keterangan" class="form-input" placeholder="Catatan Tambahan (Opsional)">
+              <i class="fas fa-sticky-note input-icon"></i>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="kirimData()">Simpan Transaksi</button>
+            <button type="button" class="btn-submit btn-back" onclick="keHome()">Kembali</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+<script>
+  // GANTI URL INI DENGAN URL DEPLOYMENT ANDA DARI LANGKAH 1
+  const API_URL = "https://script.google.com/macros/s/AKfycbz6LCNUKo_J26dfqGRVPUd9LpPlM27S0LBF5ztctlMt2zNDiiSsM0dLlQhiioucNuaqBQ/exec";
+
+  function formatRupiah(el) {
+    let val = el.value.replace(/\D/g, '');
+    el.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  function bukaForm(jenis) {
+    document.getElementById('view-home').classList.add('hidden');
+    document.getElementById('view-form').classList.remove('hidden');
+    document.getElementById('input-jenis').value = jenis;
+    document.getElementById('label-jenis').innerText = jenis;
+    document.getElementById('display-saldo').innerText = "Loading...";
+    
+    // Ambil Saldo via Fetch
+    fetch(`${API_URL}?sheet=${jenis}`)
+      .then(res => res.json())
+      .then(data => { document.getElementById('display-saldo').innerText = data.saldo; });
+  }
+
+  function keHome() {
+    document.getElementById('view-form').classList.add('hidden');
+    document.getElementById('view-home').classList.remove('hidden');
+  }
+
+  function setTipe(tipe, btn) {
+    document.getElementById('input-tipe').value = tipe;
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active', 'in-mode', 'out-mode'));
+    btn.classList.add('active', (tipe === 'Pemasukan' ? 'in-mode' : 'out-mode'));
+  }
+
+  async function kirimData() {
+    const btn = document.querySelector('.btn-submit');
+    const form = document.getElementById('transaksiForm');
+    
+    const data = {
+      jenisBuku: document.getElementById('input-jenis').value,
+      tipe: document.getElementById('input-tipe').value,
+      deskripsi: form.deskripsi.value,
+      nominal: form.nominal.value,
+      keterangan: form.keterangan.value
+    };
+
+    if(!data.nominal || !data.deskripsi) return Swal.fire("Oops", "Data tidak lengkap", "warning");
+
+    btn.innerText = "Mengirim...";
+    btn.disabled = true;
+
+    try {
+      // Mengirim data ke Google Apps Script
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+      const res = await response.json();
+
+      if(res.result === "Sukses") {
+        Swal.fire("Tersimpan!", "", "success").then(() => {
+          form.reset();
+          bukaForm(data.jenisBuku); // Refresh saldo
+        });
+      }
+    } catch (err) {
+      Swal.fire("Error", "Gagal koneksi ke server", "error");
+    } finally {
+      btn.innerText = "Simpan Transaksi";
+      btn.disabled = false;
+    }
+  }
+</script>
