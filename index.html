@@ -4,21 +4,20 @@
     <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP-BOS | Blossom Edition</title>
+    <title>SIP-BOS | Blossom Edition Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
       :root {
-        --primary: #ffb7ce; /* Sakura Pink */
-        --secondary: #dcd3ff; /* Soft Lavender */
-        --accent: #b2f2bb; /* Soft Mint */
+        --primary: #ffb7ce; 
+        --primary-dark: #ff85a1;
+        --secondary: #dcd3ff; 
+        --accent: #b2f2bb; 
         --text: #5f6368;
         --bg: #fff9fb;
         --card: #ffffff;
-        --danger: #ff8787;
-        --success: #63e6be;
       }
 
       * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,72 +27,105 @@
         background-color: var(--bg);
         color: var(--text);
         min-height: 100vh;
-        background-image: 
-          radial-gradient(at 0% 0%, rgba(255, 183, 206, 0.2) 0px, transparent 50%),
-          radial-gradient(at 100% 100%, rgba(220, 211, 255, 0.2) 0px, transparent 50%);
-        display: flex;
-        justify-content: center;
+        overflow-x: hidden;
         padding: 40px 20px;
+        position: relative;
+      }
+
+      /* Dekorasi Latar Belakang agar tidak kosong */
+      body::before {
+        content: '';
+        position: fixed;
+        top: -100px;
+        right: -100px;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(255,183,206,0.15) 0%, transparent 70%);
+        z-index: -1;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        bottom: -100px;
+        left: -100px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(220,211,255,0.15) 0%, transparent 70%);
+        z-index: -1;
       }
 
       .app-container {
         width: 100%;
-        max-width: 900px;
+        max-width: 1200px; /* Diperlebar mengikuti referensi foto */
+        margin: 0 auto;
       }
 
       /* --- HEADER --- */
       header {
-        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
         margin-bottom: 40px;
+        border-bottom: 2px solid rgba(255, 183, 206, 0.2);
+        padding-bottom: 20px;
+      }
+
+      .brand {
+        text-align: left;
       }
 
       .header-icon {
-        font-size: 40px;
-        color: var(--primary);
-        margin-bottom: 10px;
-        display: inline-block;
-        filter: drop-shadow(0 4px 6px rgba(255, 183, 206, 0.4));
+        font-size: 30px;
+        color: var(--primary-dark);
+        margin-right: 10px;
       }
 
       header h1 {
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 700;
-        color: #ff85a1;
-        letter-spacing: -0.5px;
+        color: var(--primary-dark);
+        display: inline-block;
       }
 
       header p {
         font-size: 14px;
         color: #a5aab0;
-        font-weight: 500;
         margin-top: 5px;
       }
 
-      /* --- NAV PILLS --- */
+      .system-info {
+        text-align: right;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #ffb7ce;
+      }
+
+      /* --- NAVIGATION --- */
       .nav-pills {
         display: flex;
-        justify-content: center;
         gap: 15px;
         margin-bottom: 30px;
       }
 
       .pill {
-        padding: 12px 25px;
+        padding: 14px 28px;
         border: none;
         background: var(--card);
-        border-radius: 20px;
+        border-radius: 15px;
         font-family: inherit;
         font-weight: 700;
         color: #ff85a1;
         cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0 4px 15px rgba(255, 183, 206, 0.15);
+        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 10px rgba(255, 183, 206, 0.1);
       }
 
       .pill.active {
-        background: linear-gradient(135deg, var(--primary), #ff85a1);
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         color: white;
-        box-shadow: 0 8px 20px rgba(255, 183, 206, 0.4);
+        box-shadow: 0 8px 20px rgba(255, 183, 206, 0.3);
         transform: translateY(-2px);
       }
 
@@ -101,153 +133,164 @@
       .main-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: 30px;
+      }
+
+      @media (min-width: 992px) {
+        .main-grid { grid-template-columns: 1.2fr 1fr; }
       }
 
       .card {
         background: var(--card);
-        border-radius: 30px;
-        padding: 35px;
-        box-shadow: 0 15px 35px rgba(255, 183, 206, 0.1);
-        border: 2px solid rgba(255, 255, 255, 0.8);
-      }
-
-      /* Saldo Card */
-      .balance-card {
-        text-align: center;
-        background: linear-gradient(135deg, #ffffff, #fff0f3);
+        border-radius: 25px;
+        padding: 45px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 183, 206, 0.1);
         position: relative;
         overflow: hidden;
       }
 
-      .balance-card::after {
-        content: '\f004';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
+      /* Balance Section (Left) */
+      .balance-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 400px;
+        background: linear-gradient(160deg, #ffffff 0%, #fff5f8 100%);
+      }
+
+      .balance-card::before {
+        content: '';
         position: absolute;
-        bottom: -20px;
-        right: -10px;
-        font-size: 100px;
-        color: rgba(255, 183, 206, 0.05);
+        top: 0; left: 0; width: 6px; height: 100%;
+        background: var(--primary);
       }
 
       .bal-label {
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 700;
-        color: #ff85a1;
+        color: var(--primary-dark);
         text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 10px;
-        display: block;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
       }
 
       #display-saldo {
-        font-size: 44px;
+        font-size: 64px; /* Lebih besar */
         font-weight: 700;
-        color: #5f6368;
+        color: #444;
+        word-break: break-all;
+        line-height: 1.1;
       }
 
-      .sync-msg {
-        margin-top: 15px;
-        font-size: 12px;
-        color: #a5aab0;
+      .sync-status {
+        margin-top: 30px;
+        font-size: 13px;
+        color: #2ecc71;
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 6px;
+        gap: 8px;
+        font-weight: 600;
       }
 
-      /* Form Section */
+      /* Form Section (Right) */
       .form-title {
-        font-size: 20px;
+        font-size: 22px;
         font-weight: 700;
-        margin-bottom: 25px;
-        color: #ff85a1;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        margin-bottom: 30px;
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
 
       .type-toggle {
         display: flex;
-        background: #fdf2f5;
-        padding: 6px;
-        border-radius: 18px;
-        margin-bottom: 25px;
+        background: #f8f9fa;
+        padding: 5px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        border: 1px solid #eee;
       }
 
       .t-btn {
         flex: 1;
-        padding: 12px;
+        padding: 14px;
         border: none;
         background: transparent;
-        border-radius: 14px;
+        border-radius: 8px;
         font-weight: 700;
         font-family: inherit;
         cursor: pointer;
-        transition: 0.3s;
-        color: #ffb7ce;
+        transition: 0.2s;
+        color: #adb5bd;
       }
 
       .t-btn.active.in { background: var(--accent); color: #2b8a3e; }
-      .t-btn.active.out { background: var(--primary); color: white; }
+      .t-btn.active.out { background: #ff8787; color: white; }
 
-      .input-wrapper { margin-bottom: 20px; }
+      .input-wrapper { margin-bottom: 25px; }
       .input-wrapper label {
         display: block;
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 8px;
-        padding-left: 10px;
-        color: #868e96;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: #888;
+        text-transform: uppercase;
       }
 
       .pastel-input {
         width: 100%;
-        padding: 15px 20px;
+        padding: 16px 20px;
         background: #fdfdfe;
-        border: 2px solid #f1f3f5;
-        border-radius: 18px;
+        border: 1.5px solid #eee;
+        border-radius: 12px;
         font-family: inherit;
-        font-size: 15px;
+        font-size: 16px;
         outline: none;
         transition: 0.3s;
-        color: var(--text);
       }
 
       .pastel-input:focus {
         border-color: var(--primary);
-        background: #fff;
-        box-shadow: 0 5px 15px rgba(255, 183, 206, 0.2);
+        box-shadow: 0 0 0 4px rgba(255, 183, 206, 0.15);
       }
 
       .btn-submit {
         width: 100%;
-        padding: 18px;
-        background: linear-gradient(135deg, var(--primary), #ff85a1);
+        padding: 20px;
+        background: #ffb7ce;
         color: white;
         border: none;
-        border-radius: 20px;
+        border-radius: 15px;
         font-weight: 700;
         font-size: 16px;
         cursor: pointer;
         transition: 0.3s;
-        box-shadow: 0 10px 20px rgba(255, 183, 206, 0.3);
+        box-shadow: 0 10px 20px rgba(255, 183, 206, 0.2);
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
 
       .btn-submit:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 25px rgba(255, 183, 206, 0.4);
+        background: var(--primary-dark);
+        transform: translateY(-2px);
       }
 
-      .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+      .btn-submit:disabled { background: #eee; cursor: not-allowed; box-shadow: none; }
 
-      @media (min-width: 768px) {
-        .main-grid { grid-template-columns: 1fr 1.3fr; align-items: start; }
+      /* Dekorasi Bunga Tambahan */
+      .flower-deco {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 80px;
+        opacity: 0.03;
+        color: var(--primary-dark);
+        pointer-events: none;
       }
     </style>
   </head>
@@ -255,56 +298,63 @@
 
     <div class="app-container">
       <header>
-        <div class="header-icon"><i class="fas fa-flower"></i></div>
-        <h1>SIP-BOS <span style="font-weight: 300;">Blossom</span></h1>
-        <p>Pencatatan Keuangan Cantik & Rapi</p>
+        <div class="brand">
+          <i class="fas fa-leaf header-icon"></i>
+          <h1>SIP-BOS <span style="font-weight: 300;">PRO</span></h1>
+          <p>Portal Keuangan Terpadu SDN Rantau Bujur</p>
+        </div>
+        <div class="system-info">
+          Sistem Keamanan Tingkat Tinggi<br>
+          <span style="font-weight: 700;">Encrypted Cloud Server</span>
+        </div>
       </header>
 
       <nav class="nav-pills">
-        <button class="pill active" onclick="switchSource('BOS Reguler', this)">BOS Reguler</button>
-        <button class="pill" onclick="switchSource('BOS Kas', this)">BOS Kas</button>
+        <button class="pill active" onclick="switchSource('BOS Reguler', this)">BOS REGULER</button>
+        <button class="pill" onclick="switchSource('BOS Kas', this)">BOS KAS SEKOLAH</button>
       </nav>
 
       <div class="main-grid">
-        <!-- BALANCE -->
+        <!-- BALANCE SECTION -->
         <div class="card balance-card">
-          <span class="bal-label" id="current-tag">Saldo BOS Reguler</span>
-          <div id="display-saldo">Rp 0</div>
-          <div class="sync-msg">
-            <i class="fas fa-heart" style="color: var(--primary)"></i> Tersimpan di Cloud
+          <span class="bal-label" id="current-tag">Balance BOS Reguler</span>
+          <div id="display-saldo">...</div>
+          <div class="sync-status" id="sync-status">
+            <i class="fas fa-circle-notch fa-spin"></i> Menghubungkan ke server...
           </div>
+          <i class="fas fa-spa flower-deco"></i>
         </div>
 
-        <!-- FORM -->
+        <!-- FORM SECTION -->
         <div class="card">
-          <h3 class="form-title"><i class="fas fa-pen-fancy"></i> Catatan Baru</h3>
+          <h3 class="form-title">Pencatatan Baru</h3>
           
           <form id="transaksiForm">
             <input type="hidden" id="input-jenis" name="jenisBuku" value="BOS Reguler">
             <input type="hidden" id="input-tipe" name="tipe" value="Pemasukan">
 
             <div class="type-toggle">
-              <button type="button" class="t-btn active in" id="toggle-in" onclick="changeMode('Pemasukan')">Masuk</button>
-              <button type="button" class="t-btn" id="toggle-out" onclick="changeMode('Pengeluaran')">Keluar</button>
+              <button type="button" class="t-btn active in" id="toggle-in" onclick="changeMode('Pemasukan')">PEMASUKAN</button>
+              <button type="button" class="t-btn" id="toggle-out" onclick="changeMode('Pengeluaran')">PENGELUARAN</button>
             </div>
 
             <div class="input-wrapper">
-              <label>Rincian Transaksi</label>
-              <input type="text" name="deskripsi" class="pastel-input" placeholder="Apa kegiatannya?" required>
+              <label>Uraian Transaksi</label>
+              <input type="text" name="deskripsi" class="pastel-input" placeholder="Input rincian kegiatan..." required>
             </div>
 
             <div class="input-wrapper">
-              <label>Nominal (Rp)</label>
+              <label>Nominal (IDR)</label>
               <input type="text" name="nominal" id="nominal-input" class="pastel-input" placeholder="0" required onkeyup="moneyFormat(this)">
             </div>
 
             <div class="input-wrapper">
-              <label>Keterangan Tambahan</label>
-              <input type="text" name="keterangan" class="pastel-input" placeholder="Toko atau No. Nota">
+              <label>Referensi Dokumentasi</label>
+              <input type="text" name="keterangan" class="pastel-input" placeholder="Nomor BKU / Kode Nota">
             </div>
 
             <button type="button" class="btn-submit" id="save-btn" onclick="submitData()">
-              Simpan Catatan <i class="fas fa-save"></i>
+              Otorisasi & Simpan <i class="fas fa-lock"></i>
             </button>
           </form>
         </div>
@@ -313,8 +363,29 @@
 
     <script>
       const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6LCNUKo_J26dfqGRVPUd9LpPlM27S0LBF5ztctlMt2zNDiiSsM0dLlQhiioucNuaqBQ/exec";
+      
+      const balanceCache = {
+        'BOS Reguler': null,
+        'BOS Kas': null
+      };
 
-      window.onload = () => loadBalance();
+      window.onload = () => {
+        fetchAllBalances();
+      };
+
+      function fetchAllBalances() {
+        ['BOS Reguler', 'BOS Kas'].forEach(source => {
+          fetch(`${SCRIPT_URL}?sheet=${encodeURIComponent(source)}`)
+            .then(res => res.json())
+            .then(data => {
+              balanceCache[source] = data.saldo;
+              if (document.getElementById('input-jenis').value === source) {
+                updateBalanceDisplay(data.saldo);
+              }
+            })
+            .catch(err => console.error(err));
+        });
+      }
 
       function moneyFormat(el) {
         let value = el.value.replace(/\D/g, '');
@@ -325,29 +396,41 @@
         document.querySelectorAll('.pill').forEach(l => l.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById('input-jenis').value = source;
-        document.getElementById('current-tag').innerText = "Saldo " + source;
-        loadBalance();
+        document.getElementById('current-tag').innerText = "Balance " + source;
+        
+        if (balanceCache[source]) {
+          updateBalanceDisplay(balanceCache[source]);
+        } else {
+          document.getElementById('display-saldo').innerText = "...";
+          document.getElementById('display-saldo').style.opacity = "0.5";
+        }
+        
+        refreshSingleBalance(source);
       }
 
-      function loadBalance() {
-        const source = document.getElementById('input-jenis').value;
-        const saldoDiv = document.getElementById('display-saldo');
-        saldoDiv.style.opacity = "0.3";
-        
+      function refreshSingleBalance(source) {
         fetch(`${SCRIPT_URL}?sheet=${encodeURIComponent(source)}`)
           .then(res => res.json())
           .then(data => {
-            saldoDiv.innerText = data.saldo;
-            saldoDiv.style.opacity = "1";
-            
-            const len = data.saldo.length;
-            if(len > 18) saldoDiv.style.fontSize = "26px";
-            else if(len > 14) saldoDiv.style.fontSize = "34px";
-            else saldoDiv.style.fontSize = "44px";
-          })
-          .catch(() => {
-            saldoDiv.innerText = "Error";
+            balanceCache[source] = data.saldo;
+            if (document.getElementById('input-jenis').value === source) {
+              updateBalanceDisplay(data.saldo);
+            }
           });
+      }
+
+      function updateBalanceDisplay(value) {
+        const saldoDiv = document.getElementById('display-saldo');
+        const syncStatus = document.getElementById('sync-status');
+        
+        saldoDiv.innerText = value;
+        saldoDiv.style.opacity = "1";
+        syncStatus.innerHTML = '<i class="fas fa-check-circle"></i> VERIFIED BY TREASURY SYSTEM';
+        
+        const len = value.length;
+        if(len > 16) saldoDiv.style.fontSize = "36px";
+        else if(len > 12) saldoDiv.style.fontSize = "48px";
+        else saldoDiv.style.fontSize = "64px";
       }
 
       function changeMode(mode) {
@@ -367,9 +450,10 @@
       async function submitData() {
         const btn = document.getElementById('save-btn');
         const form = document.getElementById('transaksiForm');
+        const currentSource = document.getElementById('input-jenis').value;
         
         const payload = {
-          jenisBuku: document.getElementById('input-jenis').value,
+          jenisBuku: currentSource,
           tipe: document.getElementById('input-tipe').value,
           deskripsi: form.deskripsi.value,
           nominal: form.nominal.value,
@@ -378,17 +462,16 @@
 
         if(!payload.nominal || !payload.deskripsi) {
           return Swal.fire({
-            background: '#fff9fb',
-            color: '#ff85a1',
+            background: '#fff',
             icon: 'warning',
-            title: 'Lengkapi Data',
-            text: 'Isi rincian dan nominal dulu ya!',
+            title: 'DATA TIDAK LENGKAP',
+            text: 'Harap lengkapi uraian dan nominal sebelum menyimpan.',
             confirmButtonColor: '#ffb7ce'
           });
         }
 
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-heart fa-beat"></i> Sedang Menyimpan...';
+        btn.innerHTML = '<i class="fas fa-sync fa-spin"></i> MEMPROSES DATA...';
 
         try {
           const res = await fetch(SCRIPT_URL, {
@@ -399,28 +482,28 @@
 
           if (result.result.includes("Berhasil")) {
             Swal.fire({
-              background: '#fff9fb',
+              background: '#fff',
               icon: 'success',
-              title: 'Berhasil!',
-              text: 'Catatan keuangan sudah tersimpan rapi.',
+              title: 'OTORISASI BERHASIL',
+              text: 'Data telah diamankan ke database cloud SDN Rantau Bujur.',
               timer: 2000,
               showConfirmButton: false
             }).then(() => {
               form.reset();
-              loadBalance();
+              refreshSingleBalance(currentSource);
             });
           }
         } catch (e) {
           Swal.fire({
-            background: '#fff9fb',
+            background: '#fff',
             icon: 'error',
-            title: 'Gagal',
-            text: 'Koneksi internet bermasalah.',
+            title: 'KONEKSI TERPUTUS',
+            text: 'Gagal menghubungi server.',
             confirmButtonColor: '#ffb7ce'
           });
         } finally {
           btn.disabled = false;
-          btn.innerHTML = 'Simpan Catatan <i class="fas fa-save"></i>';
+          btn.innerHTML = 'Otorisasi & Simpan <i class="fas fa-lock"></i>';
         }
       }
     </script>
