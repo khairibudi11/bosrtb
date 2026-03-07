@@ -4,318 +4,307 @@
     <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP-BOS | Midnight Gold Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SIP-BOS | Blossom Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
       :root {
-        --primary: #c5a059; /* Gold Metallic */
-        --primary-dark: #a67c37;
-        --bg-dark: #121417; /* Deep Charcoal */
-        --card-bg: #1c1f24;
-        --text-main: #ffffff;
-        --text-muted: #94a3b8;
-        --success: #10b981;
-        --danger: #ef4444;
-        --border: rgba(197, 160, 89, 0.2);
+        --primary: #ffb7ce; /* Sakura Pink */
+        --secondary: #dcd3ff; /* Soft Lavender */
+        --accent: #b2f2bb; /* Soft Mint */
+        --text: #5f6368;
+        --bg: #fff9fb;
+        --card: #ffffff;
+        --danger: #ff8787;
+        --success: #63e6be;
       }
 
       * { box-sizing: border-box; margin: 0; padding: 0; }
 
       body {
-        font-family: 'Montserrat', sans-serif;
-        background-color: var(--bg-dark);
-        color: var(--text-main);
+        font-family: 'Quicksand', sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
         min-height: 100vh;
-        background-image: linear-gradient(to bottom right, #121417, #1e293b);
+        background-image: 
+          radial-gradient(at 0% 0%, rgba(255, 183, 206, 0.2) 0px, transparent 50%),
+          radial-gradient(at 100% 100%, rgba(220, 211, 255, 0.2) 0px, transparent 50%);
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
       }
 
-      .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 50px 20px;
+      .app-container {
+        width: 100%;
+        max-width: 900px;
       }
 
       /* --- HEADER --- */
       header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 50px;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 25px;
-      }
-
-      .brand h1 {
-        font-size: 24px;
-        font-weight: 800;
-        letter-spacing: 2px;
-        color: var(--primary);
-        text-transform: uppercase;
-      }
-
-      .brand p {
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-top: 5px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      /* --- NAVIGATION --- */
-      .nav-bar {
-        display: flex;
-        gap: 15px;
+        text-align: center;
         margin-bottom: 40px;
       }
 
-      .nav-btn {
-        padding: 12px 28px;
-        background: transparent;
-        border: 1px solid var(--border);
+      .header-icon {
+        font-size: 40px;
         color: var(--primary);
-        border-radius: 4px; /* Sharp corporate look */
-        font-weight: 600;
-        font-size: 13px;
+        margin-bottom: 10px;
+        display: inline-block;
+        filter: drop-shadow(0 4px 6px rgba(255, 183, 206, 0.4));
+      }
+
+      header h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ff85a1;
+        letter-spacing: -0.5px;
+      }
+
+      header p {
+        font-size: 14px;
+        color: #a5aab0;
+        font-weight: 500;
+        margin-top: 5px;
+      }
+
+      /* --- NAV PILLS --- */
+      .nav-pills {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .pill {
+        padding: 12px 25px;
+        border: none;
+        background: var(--card);
+        border-radius: 20px;
+        font-family: inherit;
+        font-weight: 700;
+        color: #ff85a1;
         cursor: pointer;
         transition: 0.3s;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(255, 183, 206, 0.15);
       }
 
-      .nav-btn.active {
-        background: var(--primary);
-        color: var(--bg-dark);
-        border-color: var(--primary);
-        box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
+      .pill.active {
+        background: linear-gradient(135deg, var(--primary), #ff85a1);
+        color: white;
+        box-shadow: 0 8px 20px rgba(255, 183, 206, 0.4);
+        transform: translateY(-2px);
       }
 
-      .nav-btn:hover:not(.active) {
-        background: rgba(197, 160, 89, 0.1);
-      }
-
-      /* --- GRID --- */
-      .grid {
+      /* --- MAIN GRID --- */
+      .main-grid {
         display: grid;
-        grid-template-columns: 1fr 1.3fr;
-        gap: 30px;
+        grid-template-columns: 1fr;
+        gap: 25px;
       }
 
       .card {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        padding: 40px;
+        background: var(--card);
+        border-radius: 30px;
+        padding: 35px;
+        box-shadow: 0 15px 35px rgba(255, 183, 206, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+      }
+
+      /* Saldo Card */
+      .balance-card {
+        text-align: center;
+        background: linear-gradient(135deg, #ffffff, #fff0f3);
         position: relative;
         overflow: hidden;
       }
 
-      /* Saldo Card */
-      .saldo-card {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-left: 4px solid var(--primary);
-      }
-
-      .saldo-card::after {
-        content: '\f51e'; /* Fa icon coins */
+      .balance-card::after {
+        content: '\f004';
         font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         position: absolute;
-        font-size: 120px;
-        color: rgba(197, 160, 89, 0.03);
         bottom: -20px;
         right: -10px;
+        font-size: 100px;
+        color: rgba(255, 183, 206, 0.05);
       }
 
-      .label {
-        font-size: 11px;
+      .bal-label {
+        font-size: 13px;
         font-weight: 700;
-        color: var(--primary);
+        color: #ff85a1;
         text-transform: uppercase;
-        letter-spacing: 3px;
-        margin-bottom: 20px;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        display: block;
       }
 
       #display-saldo {
         font-size: 44px;
-        font-weight: 300; /* Thin elegant weight */
-        color: #fff;
-        margin-bottom: 10px;
+        font-weight: 700;
+        color: #5f6368;
       }
 
-      .status-badge {
-        font-size: 10px;
-        color: var(--success);
+      .sync-msg {
+        margin-top: 15px;
+        font-size: 12px;
+        color: #a5aab0;
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-weight: 600;
+        justify-content: center;
+        gap: 6px;
       }
 
       /* Form Section */
       .form-title {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 700;
-        margin-bottom: 30px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        margin-bottom: 25px;
+        color: #ff85a1;
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 10px;
       }
 
-      .form-title::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-      }
-
-      .switch {
+      .type-toggle {
         display: flex;
-        margin-bottom: 30px;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-      }
-
-      .switch-btn {
-        flex: 1;
-        padding: 14px;
-        border: none;
-        background: transparent;
-        color: var(--text-muted);
-        font-weight: 700;
-        font-size: 12px;
-        cursor: pointer;
-        transition: 0.3s;
-        text-transform: uppercase;
-      }
-
-      .switch-btn.active.in { background: rgba(16, 185, 129, 0.1); color: var(--success); }
-      .switch-btn.active.out { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
-
-      .input-field {
+        background: #fdf2f5;
+        padding: 6px;
+        border-radius: 18px;
         margin-bottom: 25px;
       }
 
-      .input-field label {
-        display: block;
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--text-muted);
-        margin-bottom: 10px;
-        text-transform: uppercase;
+      .t-btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        background: transparent;
+        border-radius: 14px;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+        transition: 0.3s;
+        color: #ffb7ce;
       }
 
-      .control {
+      .t-btn.active.in { background: var(--accent); color: #2b8a3e; }
+      .t-btn.active.out { background: var(--primary); color: white; }
+
+      .input-wrapper { margin-bottom: 20px; }
+      .input-wrapper label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        padding-left: 10px;
+        color: #868e96;
+      }
+
+      .pastel-input {
         width: 100%;
-        padding: 14px 18px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--border);
-        color: white;
+        padding: 15px 20px;
+        background: #fdfdfe;
+        border: 2px solid #f1f3f5;
+        border-radius: 18px;
         font-family: inherit;
-        font-size: 14px;
+        font-size: 15px;
         outline: none;
         transition: 0.3s;
+        color: var(--text);
       }
 
-      .control:focus {
+      .pastel-input:focus {
         border-color: var(--primary);
-        background: rgba(255,255,255,0.06);
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(255, 183, 206, 0.2);
       }
 
       .btn-submit {
         width: 100%;
         padding: 18px;
-        background: var(--primary);
-        color: var(--bg-dark);
+        background: linear-gradient(135deg, var(--primary), #ff85a1);
+        color: white;
         border: none;
-        font-weight: 800;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 16px;
         cursor: pointer;
         transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(255, 183, 206, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 10px;
       }
 
       .btn-submit:hover {
-        background: var(--primary-dark);
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 0 15px 25px rgba(255, 183, 206, 0.4);
       }
 
-      /* --- RESPONSIVE --- */
-      @media (max-width: 900px) {
-        .grid { grid-template-columns: 1fr; }
-        .container { padding: 30px 20px; }
+      .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+      @media (min-width: 768px) {
+        .main-grid { grid-template-columns: 1fr 1.3fr; align-items: start; }
       }
     </style>
   </head>
   <body>
 
-    <div class="container">
+    <div class="app-container">
       <header>
-        <div class="brand">
-          <h1>SIP-BOS <span style="font-weight: 300;">PRO</span></h1>
-          <p>Portal Keuangan Terpadu SDN Rantau Bujur</p>
-        </div>
-        <div style="text-align: right; color: var(--text-muted); font-size: 10px; font-weight: 700;">
-          SISTEM KEAMANAN TINGKAT TINGGI<br>
-          <span style="color: var(--primary)">ENCRYPTED CLOUD SERVER</span>
-        </div>
+        <div class="header-icon"><i class="fas fa-flower"></i></div>
+        <h1>SIP-BOS <span style="font-weight: 300;">Blossom</span></h1>
+        <p>Pencatatan Keuangan Cantik & Rapi</p>
       </header>
 
-      <div class="nav-bar">
-        <button class="nav-btn active" onclick="switchSource('BOS Reguler', this)">BOS Reguler</button>
-        <button class="nav-btn" onclick="switchSource('BOS Kas', this)">BOS Kas Sekolah</button>
-      </div>
+      <nav class="nav-pills">
+        <button class="pill active" onclick="switchSource('BOS Reguler', this)">BOS Reguler</button>
+        <button class="pill" onclick="switchSource('BOS Kas', this)">BOS Kas</button>
+      </nav>
 
-      <div class="grid">
+      <div class="main-grid">
         <!-- BALANCE -->
-        <div class="card saldo-card">
-          <span class="label" id="current-tag">Balance BOS Reguler</span>
+        <div class="card balance-card">
+          <span class="bal-label" id="current-tag">Saldo BOS Reguler</span>
           <div id="display-saldo">Rp 0</div>
-          <div class="status-badge">
-            <i class="fas fa-shield-alt"></i> VERIFIED BY TREASURY SYSTEM
+          <div class="sync-msg">
+            <i class="fas fa-heart" style="color: var(--primary)"></i> Tersimpan di Cloud
           </div>
         </div>
 
         <!-- FORM -->
         <div class="card">
-          <h3 class="form-title">Pencatatan Baru</h3>
+          <h3 class="form-title"><i class="fas fa-pen-fancy"></i> Catatan Baru</h3>
           
           <form id="transaksiForm">
             <input type="hidden" id="input-jenis" name="jenisBuku" value="BOS Reguler">
             <input type="hidden" id="input-tipe" name="tipe" value="Pemasukan">
 
-            <div class="switch">
-              <button type="button" class="switch-btn active in" id="toggle-in" onclick="changeMode('Pemasukan')">Pemasukan</button>
-              <button type="button" class="switch-btn" id="toggle-out" onclick="changeMode('Pengeluaran')">Pengeluaran</button>
+            <div class="type-toggle">
+              <button type="button" class="t-btn active in" id="toggle-in" onclick="changeMode('Pemasukan')">Masuk</button>
+              <button type="button" class="t-btn" id="toggle-out" onclick="changeMode('Pengeluaran')">Keluar</button>
             </div>
 
-            <div class="input-field">
-              <label>Uraian Transaksi</label>
-              <input type="text" name="deskripsi" class="control" placeholder="Input rincian kegiatan..." required>
+            <div class="input-wrapper">
+              <label>Rincian Transaksi</label>
+              <input type="text" name="deskripsi" class="pastel-input" placeholder="Apa kegiatannya?" required>
             </div>
 
-            <div class="input-field">
-              <label>Nominal (IDR)</label>
-              <input type="text" name="nominal" id="nominal-input" class="control" placeholder="0" required onkeyup="moneyFormat(this)">
+            <div class="input-wrapper">
+              <label>Nominal (Rp)</label>
+              <input type="text" name="nominal" id="nominal-input" class="pastel-input" placeholder="0" required onkeyup="moneyFormat(this)">
             </div>
 
-            <div class="input-field">
-              <label>Referensi Dokumentasi</label>
-              <input type="text" name="keterangan" class="control" placeholder="Nomor BKU / Kode Nota">
+            <div class="input-wrapper">
+              <label>Keterangan Tambahan</label>
+              <input type="text" name="keterangan" class="pastel-input" placeholder="Toko atau No. Nota">
             </div>
 
             <button type="button" class="btn-submit" id="save-btn" onclick="submitData()">
-              OTORISASI & SIMPAN <i class="fas fa-lock"></i>
+              Simpan Catatan <i class="fas fa-save"></i>
             </button>
           </form>
         </div>
@@ -333,17 +322,17 @@
       }
 
       function switchSource(source, btn) {
-        document.querySelectorAll('.nav-btn').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.pill').forEach(l => l.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById('input-jenis').value = source;
-        document.getElementById('current-tag').innerText = "Balance " + source;
+        document.getElementById('current-tag').innerText = "Saldo " + source;
         loadBalance();
       }
 
       function loadBalance() {
         const source = document.getElementById('input-jenis').value;
         const saldoDiv = document.getElementById('display-saldo');
-        saldoDiv.style.opacity = "0.2";
+        saldoDiv.style.opacity = "0.3";
         
         fetch(`${SCRIPT_URL}?sheet=${encodeURIComponent(source)}`)
           .then(res => res.json())
@@ -351,10 +340,9 @@
             saldoDiv.innerText = data.saldo;
             saldoDiv.style.opacity = "1";
             
-            // Scalable text
             const len = data.saldo.length;
             if(len > 18) saldoDiv.style.fontSize = "26px";
-            else if(len > 14) saldoDiv.style.fontSize = "32px";
+            else if(len > 14) saldoDiv.style.fontSize = "34px";
             else saldoDiv.style.fontSize = "44px";
           })
           .catch(() => {
@@ -390,17 +378,17 @@
 
         if(!payload.nominal || !payload.deskripsi) {
           return Swal.fire({
-            background: '#1c1f24',
-            color: '#fff',
+            background: '#fff9fb',
+            color: '#ff85a1',
             icon: 'warning',
-            title: 'Validasi Gagal',
-            text: 'Harap lengkapi semua field wajib.',
-            confirmButtonColor: '#c5a059'
+            title: 'Lengkapi Data',
+            text: 'Isi rincian dan nominal dulu ya!',
+            confirmButtonColor: '#ffb7ce'
           });
         }
 
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> MEMPROSES...';
+        btn.innerHTML = '<i class="fas fa-heart fa-beat"></i> Sedang Menyimpan...';
 
         try {
           const res = await fetch(SCRIPT_URL, {
@@ -411,11 +399,10 @@
 
           if (result.result.includes("Berhasil")) {
             Swal.fire({
-              background: '#1c1f24',
-              color: '#fff',
+              background: '#fff9fb',
               icon: 'success',
-              title: 'Tersinkronisasi',
-              text: 'Data telah berhasil disimpan ke database cloud.',
+              title: 'Berhasil!',
+              text: 'Catatan keuangan sudah tersimpan rapi.',
               timer: 2000,
               showConfirmButton: false
             }).then(() => {
@@ -425,16 +412,15 @@
           }
         } catch (e) {
           Swal.fire({
-            background: '#1c1f24',
-            color: '#fff',
+            background: '#fff9fb',
             icon: 'error',
-            title: 'Network Error',
-            text: 'Gagal menghubungi server.',
-            confirmButtonColor: '#c5a059'
+            title: 'Gagal',
+            text: 'Koneksi internet bermasalah.',
+            confirmButtonColor: '#ffb7ce'
           });
         } finally {
           btn.disabled = false;
-          btn.innerHTML = 'OTORISASI & SIMPAN <i class="fas fa-lock"></i>';
+          btn.innerHTML = 'Simpan Catatan <i class="fas fa-save"></i>';
         }
       }
     </script>
