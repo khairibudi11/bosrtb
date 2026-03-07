@@ -30,14 +30,34 @@
         overflow-x: hidden;
         padding: 40px 20px;
         position: relative;
-        background-image: 
-          radial-gradient(at 0% 0%, rgba(255, 183, 206, 0.1) 0px, transparent 50%),
-          radial-gradient(at 100% 100%, rgba(220, 211, 255, 0.1) 0px, transparent 50%);
+      }
+
+      /* Dekorasi Latar Belakang agar tidak kosong */
+      body::before {
+        content: '';
+        position: fixed;
+        top: -100px;
+        right: -100px;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(255,183,206,0.15) 0%, transparent 70%);
+        z-index: -1;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        bottom: -100px;
+        left: -100px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(220,211,255,0.15) 0%, transparent 70%);
+        z-index: -1;
       }
 
       .app-container {
         width: 100%;
-        max-width: 1200px;
+        max-width: 1200px; /* Diperlebar mengikuti referensi foto */
         margin: 0 auto;
       }
 
@@ -51,14 +71,44 @@
         padding-bottom: 20px;
       }
 
-      .brand { text-align: left; }
-      .header-icon { font-size: 30px; color: var(--primary-dark); margin-right: 10px; }
-      header h1 { font-size: 28px; font-weight: 700; color: var(--primary-dark); display: inline-block; }
-      header p { font-size: 14px; color: #a5aab0; margin-top: 5px; }
-      .system-info { text-align: right; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #ffb7ce; }
+      .brand {
+        text-align: left;
+      }
+
+      .header-icon {
+        font-size: 30px;
+        color: var(--primary-dark);
+        margin-right: 10px;
+      }
+
+      header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        display: inline-block;
+      }
+
+      header p {
+        font-size: 14px;
+        color: #a5aab0;
+        margin-top: 5px;
+      }
+
+      .system-info {
+        text-align: right;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #ffb7ce;
+      }
 
       /* --- NAVIGATION --- */
-      .nav-pills { display: flex; gap: 15px; margin-bottom: 30px; }
+      .nav-pills {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
       .pill {
         padding: 14px 28px;
         border: none;
@@ -68,9 +118,10 @@
         font-weight: 700;
         color: #ff85a1;
         cursor: pointer;
-        transition: 0.3s;
+        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         box-shadow: 0 4px 10px rgba(255, 183, 206, 0.1);
       }
+
       .pill.active {
         background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         color: white;
@@ -79,8 +130,15 @@
       }
 
       /* --- MAIN GRID --- */
-      .main-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
-      @media (min-width: 992px) { .main-grid { grid-template-columns: 1.2fr 1fr; } }
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      @media (min-width: 992px) {
+        .main-grid { grid-template-columns: 1.2fr 1fr; }
+      }
 
       .card {
         background: var(--card);
@@ -92,12 +150,20 @@
         overflow: hidden;
       }
 
+      /* Balance Section (Left) */
       .balance-card {
         display: flex;
         flex-direction: column;
         justify-content: center;
         min-height: 400px;
         background: linear-gradient(160deg, #ffffff 0%, #fff5f8 100%);
+      }
+
+      .balance-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 6px; height: 100%;
+        background: var(--primary);
       }
 
       .bal-label {
@@ -110,12 +176,11 @@
       }
 
       #display-saldo {
-        font-size: 64px; /* Ukuran dasar besar */
+        font-size: 64px; /* Lebih besar */
         font-weight: 700;
         color: #444;
         word-break: break-all;
         line-height: 1.1;
-        transition: font-size 0.2s ease;
       }
 
       .sync-status {
@@ -128,17 +193,67 @@
         font-weight: 600;
       }
 
-      /* FORM STYLING */
-      .form-title { font-size: 22px; font-weight: 700; margin-bottom: 30px; color: #555; text-transform: uppercase; }
-      .type-toggle { display: flex; background: #f8f9fa; padding: 5px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #eee; }
-      .t-btn { flex: 1; padding: 14px; border: none; background: transparent; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; color: #adb5bd; }
+      /* Form Section (Right) */
+      .form-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .type-toggle {
+        display: flex;
+        background: #f8f9fa;
+        padding: 5px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        border: 1px solid #eee;
+      }
+
+      .t-btn {
+        flex: 1;
+        padding: 14px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+        transition: 0.2s;
+        color: #adb5bd;
+      }
+
       .t-btn.active.in { background: var(--accent); color: #2b8a3e; }
       .t-btn.active.out { background: #ff8787; color: white; }
 
       .input-wrapper { margin-bottom: 25px; }
-      .input-wrapper label { display: block; font-size: 12px; font-weight: 800; margin-bottom: 10px; color: #888; text-transform: uppercase; }
-      .pastel-input { width: 100%; padding: 16px 20px; background: #fdfdfe; border: 1.5px solid #eee; border-radius: 12px; font-size: 16px; outline: none; transition: 0.3s; }
-      .pastel-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255, 183, 206, 0.15); }
+      .input-wrapper label {
+        display: block;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: #888;
+        text-transform: uppercase;
+      }
+
+      .pastel-input {
+        width: 100%;
+        padding: 16px 20px;
+        background: #fdfdfe;
+        border: 1.5px solid #eee;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 16px;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .pastel-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(255, 183, 206, 0.15);
+      }
 
       .btn-submit {
         width: 100%;
@@ -157,11 +272,26 @@
         justify-content: center;
         gap: 12px;
         text-transform: uppercase;
+        letter-spacing: 1px;
       }
-      .btn-submit:hover { background: var(--primary-dark); transform: translateY(-2px); }
-      .btn-submit:disabled { background: #eee; cursor: not-allowed; }
 
-      .flower-deco { position: absolute; bottom: 20px; right: 20px; font-size: 80px; opacity: 0.03; color: var(--primary-dark); pointer-events: none; }
+      .btn-submit:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .btn-submit:disabled { background: #eee; cursor: not-allowed; box-shadow: none; }
+
+      /* Dekorasi Bunga Tambahan */
+      .flower-deco {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 80px;
+        opacity: 0.03;
+        color: var(--primary-dark);
+        pointer-events: none;
+      }
     </style>
   </head>
   <body>
@@ -174,7 +304,7 @@
           <p>Portal Keuangan Terpadu SDN Rantau Bujur</p>
         </div>
         <div class="system-info">
-          Sistem Keamanan Terverifikasi<br>
+          Sistem Keamanan Tingkat Tinggi<br>
           <span style="font-weight: 700;">Encrypted Cloud Server</span>
         </div>
       </header>
@@ -185,6 +315,7 @@
       </nav>
 
       <div class="main-grid">
+        <!-- BALANCE SECTION -->
         <div class="card balance-card">
           <span class="bal-label" id="current-tag">Balance BOS Reguler</span>
           <div id="display-saldo">...</div>
@@ -194,8 +325,10 @@
           <i class="fas fa-spa flower-deco"></i>
         </div>
 
+        <!-- FORM SECTION -->
         <div class="card">
           <h3 class="form-title">Pencatatan Baru</h3>
+          
           <form id="transaksiForm">
             <input type="hidden" id="input-jenis" name="jenisBuku" value="BOS Reguler">
             <input type="hidden" id="input-tipe" name="tipe" value="Pemasukan">
@@ -231,9 +364,14 @@
     <script>
       const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6LCNUKo_J26dfqGRVPUd9LpPlM27S0LBF5ztctlMt2zNDiiSsM0dLlQhiioucNuaqBQ/exec";
       
-      const balanceCache = { 'BOS Reguler': null, 'BOS Kas': null };
+      const balanceCache = {
+        'BOS Reguler': null,
+        'BOS Kas': null
+      };
 
-      window.onload = () => fetchAllBalances();
+      window.onload = () => {
+        fetchAllBalances();
+      };
 
       function fetchAllBalances() {
         ['BOS Reguler', 'BOS Kas'].forEach(source => {
@@ -241,8 +379,11 @@
             .then(res => res.json())
             .then(data => {
               balanceCache[source] = data.saldo;
-              if (document.getElementById('input-jenis').value === source) updateBalanceDisplay(data.saldo);
-            });
+              if (document.getElementById('input-jenis').value === source) {
+                updateBalanceDisplay(data.saldo);
+              }
+            })
+            .catch(err => console.error(err));
         });
       }
 
@@ -257,11 +398,13 @@
         document.getElementById('input-jenis').value = source;
         document.getElementById('current-tag').innerText = "Balance " + source;
         
-        if (balanceCache[source]) updateBalanceDisplay(balanceCache[source]);
-        else {
+        if (balanceCache[source]) {
+          updateBalanceDisplay(balanceCache[source]);
+        } else {
           document.getElementById('display-saldo').innerText = "...";
           document.getElementById('display-saldo').style.opacity = "0.5";
         }
+        
         refreshSingleBalance(source);
       }
 
@@ -270,38 +413,45 @@
           .then(res => res.json())
           .then(data => {
             balanceCache[source] = data.saldo;
-            if (document.getElementById('input-jenis').value === source) updateBalanceDisplay(data.saldo);
+            if (document.getElementById('input-jenis').value === source) {
+              updateBalanceDisplay(data.saldo);
+            }
           });
       }
 
-      // LOGIKA BARU: Huruf tetap besar sampai batas karakter yang lebih panjang
       function updateBalanceDisplay(value) {
         const saldoDiv = document.getElementById('display-saldo');
         const syncStatus = document.getElementById('sync-status');
         
         saldoDiv.innerText = value;
         saldoDiv.style.opacity = "1";
-        syncStatus.innerHTML = '<i class="fas fa-check-circle"></i> DATA TERVERIFIKASI';
+        syncStatus.innerHTML = '<i class="fas fa-check-circle"></i> VERIFIED BY TREASURY SYSTEM';
         
         const len = value.length;
-        // Penyesuaian: 32 juta biasanya sekitar 14-16 karakter (termasuk Rp dan titik)
-        // Kita biarkan tetap besar (64px) hingga 18 karakter
-        if(len > 22) saldoDiv.style.fontSize = "36px";
-        else if(len > 18) saldoDiv.style.fontSize = "48px";
-        else saldoDiv.style.fontSize = "64px"; 
+        if(len > 16) saldoDiv.style.fontSize = "36px";
+        else if(len > 12) saldoDiv.style.fontSize = "48px";
+        else saldoDiv.style.fontSize = "64px";
       }
 
       function changeMode(mode) {
         document.getElementById('input-tipe').value = mode;
-        const tin = document.getElementById('toggle-in'), tout = document.getElementById('toggle-out');
-        if(mode === 'Pemasukan') { tin.classList.add('active', 'in'); tout.classList.remove('active', 'out'); }
-        else { tout.classList.add('active', 'out'); tin.classList.remove('active', 'in'); }
+        const tin = document.getElementById('toggle-in');
+        const tout = document.getElementById('toggle-out');
+
+        if(mode === 'Pemasukan') {
+          tin.classList.add('active', 'in');
+          tout.classList.remove('active', 'out');
+        } else {
+          tout.classList.add('active', 'out');
+          tin.classList.remove('active', 'in');
+        }
       }
 
       async function submitData() {
         const btn = document.getElementById('save-btn');
         const form = document.getElementById('transaksiForm');
         const currentSource = document.getElementById('input-jenis').value;
+        
         const payload = {
           jenisBuku: currentSource,
           tipe: document.getElementById('input-tipe').value,
@@ -310,21 +460,47 @@
           keterangan: form.keterangan.value
         };
 
-        if(!payload.nominal || !payload.deskripsi) return Swal.fire({ icon: 'warning', title: 'Data Kurang', text: 'Isi rincian dan nominal!' });
+        if(!payload.nominal || !payload.deskripsi) {
+          return Swal.fire({
+            background: '#fff',
+            icon: 'warning',
+            title: 'DATA TIDAK LENGKAP',
+            text: 'Harap lengkapi uraian dan nominal sebelum menyimpan.',
+            confirmButtonColor: '#ffb7ce'
+          });
+        }
 
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-sync fa-spin"></i> MEMPROSES...';
+        btn.innerHTML = '<i class="fas fa-sync fa-spin"></i> MEMPROSES DATA...';
 
         try {
-          const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+          const res = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+          });
           const result = await res.json();
+
           if (result.result.includes("Berhasil")) {
-            Swal.fire({ icon: 'success', title: 'BERHASIL', text: 'Data tersimpan.', timer: 1500, showConfirmButton: false });
-            form.reset();
-            refreshSingleBalance(currentSource);
+            Swal.fire({
+              background: '#fff',
+              icon: 'success',
+              title: 'OTORISASI BERHASIL',
+              text: 'Data telah diamankan ke database cloud SDN Rantau Bujur.',
+              timer: 2000,
+              showConfirmButton: false
+            }).then(() => {
+              form.reset();
+              refreshSingleBalance(currentSource);
+            });
           }
         } catch (e) {
-          Swal.fire({ icon: 'error', title: 'Gagal', text: 'Cek koneksi internet.' });
+          Swal.fire({
+            background: '#fff',
+            icon: 'error',
+            title: 'KONEKSI TERPUTUS',
+            text: 'Gagal menghubungi server.',
+            confirmButtonColor: '#ffb7ce'
+          });
         } finally {
           btn.disabled = false;
           btn.innerHTML = 'Otorisasi & Simpan <i class="fas fa-lock"></i>';
